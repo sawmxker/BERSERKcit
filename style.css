@@ -1,72 +1,49 @@
-/* Сброс и базовая стилизация */
+/* Основной стиль для темы */
 body {
-  font-family: sans-serif;
-  margin: 20px;
-  background-color: #f9f9f9;
-  color: #222;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f7;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-/* Логотип */
+/* Тема темного фона */
+body.dark-mode {
+  background-color: #1e1e1e;
+  color: #ddd;
+}
+
 h1 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-top: 30px;
 }
 
-/* Таблица */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background-color: white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-th, td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-}
-
-th {
-  background-color: #fafafa;
-}
-
-/* Иконки предметов */
-.item-icons img {
-  height: 40px;
-  margin-right: 8px;
-  vertical-align: middle;
-}
-
-/* Кнопка перевода */
-.translate-button {
+#translate-btn {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
+  padding: 10px;
   border-radius: 50%;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.3s ease;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 20px;
+  right: 20px;
 }
 
-.translate-button img {
+#translate-btn img {
   width: 28px;
   height: 28px;
 }
 
-.translate-button:active {
+#translate-btn:active {
   background-color: rgba(0, 120, 255, 0.2);
 }
 
-/* Меню выбора языка */
 .language-menu {
   position: absolute;
-  top: 40px;
-  right: 0;
+  top: 60px;
+  right: 20px;
   display: flex;
   gap: 12px;
   padding: 10px 14px;
@@ -75,7 +52,7 @@ th {
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   z-index: 999;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
   opacity: 1;
   transform: translateY(0);
 }
@@ -101,4 +78,86 @@ th {
 
 .language-menu img:hover {
   transform: scale(1.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+table:hover {
+  transform: scale(1.02);
+}
+
+th, td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s ease;
+}
+
+th {
+  background-color: #f9f9f9;
+}
+
+td {
+  background-color: #fff;
+}
+
+td:hover {
+  background-color: #f1f1f1;
+}
+
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+.item-icons img {
+  height: 40px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.dark-mode table {
+  background-color: #2d2d2d;
+}
+
+.dark-mode th {
+  background-color: #3c3c3c;
+}
+
+.dark-mode td {
+  background-color: #3a3a3a;
+}
+
+.dark-mode td:hover {
+  background-color: #444;
+}
+
+.dark-mode tr:hover {
+  background-color: #333;
+}
+
+#translate-btn {
+  background-color: #f1f1f1;
+  border-radius: 50%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#translate-btn.active {
+  background-color: #3498db;
+}
+
+.dark-mode #translate-btn {
+  background-color: #444;
+}
+
+.dark-mode #translate-btn.active {
+  background-color: #2980b9;
 }
