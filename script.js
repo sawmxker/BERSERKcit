@@ -3,7 +3,7 @@ const itemsTableBody = document.getElementById("items-table").getElementsByTagNa
 const themeToggleButton = document.getElementById("theme-toggle");
 const translateBtn = document.getElementById("translate-btn");
 const languageMenu = document.getElementById("language-menu");
-
+const logo = document.getElementById("logo");
 let currentLanguage = 'en';
 
 function createTableRow(item) {
@@ -53,6 +53,8 @@ function changeLanguage(lang) {
 
 function toggleTheme() {
   document.body.classList.toggle("dark-theme");
+  const icon = themeToggleButton.querySelector("img");
+  icon.src = document.body.classList.contains("dark-theme") ? "images/moon.png" : "images/sun.png";
 }
 
 translateBtn.addEventListener("click", toggleLanguageMenu);
