@@ -61,6 +61,7 @@ header {
 #header-logo {
   height: 50px;
   width: auto;
+  display: block;
 }
 
 /* Controls */
@@ -117,8 +118,11 @@ button img {
   backdrop-filter: blur(10px);
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  transition: var(--transition);
+  transition: opacity 0.3s, transform 0.3s;
   z-index: 10;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .language-menu.hidden {
@@ -182,8 +186,8 @@ td {
 
 /* Column widths */
 th:nth-child(1), td:nth-child(1) { width: 120px; } /* Icon */
-th:nth-child(2), td:nth-child(2) { width: 30%; }   /* Display Name */
-th:nth-child(3), td:nth-child(3) { width: 25%; }   /* Base Item */
+th:nth-child(2), td:nth-child(2) { width: 30%; } /* Display Name */
+th:nth-child(3), td:nth-child(3) { width: 25%; } /* Base Item */
 th:nth-child(4), td:nth-child(4) { width: 150px; } /* Reference */
 
 /* Image styles */
@@ -214,13 +218,6 @@ th:nth-child(4), td:nth-child(4) { width: 150px; } /* Reference */
   max-width: 150px;
   border-radius: 4px;
   object-fit: contain;
-}
-
-/* Font Awesome icons */
-.fa-icon {
-  font-size: 24px;
-  margin-right: 8px;
-  color: var(--icon-color);
 }
 
 /* Tooltip for icons */
@@ -264,6 +261,13 @@ th:nth-child(4), td:nth-child(4) { width: 150px; } /* Reference */
   height: 100%;
   background-color: rgba(0, 0, 0, 0.9);
   overflow: auto;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.modal.active {
+  opacity: 1;
+  display: flex;
 }
 
 .modal-content {
@@ -294,22 +298,17 @@ th:nth-child(4), td:nth-child(4) { width: 150px; } /* Reference */
   header {
     padding: 1rem;
   }
-  
   th, td {
     padding: 0.8rem;
     font-size: 0.9rem;
   }
-  
   .item-icons img {
     height: 50px;
   }
-  
   .ref-image {
     max-height: 80px;
     max-width: 120px;
   }
-  
-  /* Adjust column widths for mobile */
   th:nth-child(1), td:nth-child(1) { width: 100px; }
   th:nth-child(2), td:nth-child(2) { width: 35%; }
   th:nth-child(3), td:nth-child(3) { width: 30%; }
