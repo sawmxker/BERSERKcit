@@ -23,12 +23,10 @@ const data = [
   }
 ];
 
-// Получение текущего языка
 function getCurrentLanguage() {
   return document.getElementById("language").value || "en";
 }
 
-// Отрисовка таблицы
 function renderTable() {
   const tbody = document.querySelector("#items-table tbody");
   tbody.innerHTML = "";
@@ -37,7 +35,6 @@ function renderTable() {
   data.forEach(item => {
     const row = document.createElement("tr");
 
-    // Иконки
     const iconCell = document.createElement("td");
     const icons = item.icon.split(" ");
     iconCell.className = "item-icons";
@@ -50,17 +47,14 @@ function renderTable() {
     });
     row.appendChild(iconCell);
 
-    // Названия
     const nameCell = document.createElement("td");
     nameCell.innerText = item.names[lang] || item.names.en;
     row.appendChild(nameCell);
 
-    // Базовый предмет
     const baseItemCell = document.createElement("td");
     baseItemCell.innerText = item.base_item;
     row.appendChild(baseItemCell);
 
-    // Референс
     const refCell = document.createElement("td");
     if (item.reference) {
       const img = document.createElement("img");
@@ -77,10 +71,8 @@ function renderTable() {
   });
 }
 
-// Обработчики языка
 document.getElementById("language").addEventListener("change", renderTable);
 
-// Кнопка перевода и меню
 const translateBtn = document.getElementById("translate-btn");
 const languageMenu = document.getElementById("language-menu");
 
@@ -97,5 +89,8 @@ languageMenu.querySelectorAll("button").forEach(btn => {
   });
 });
 
-// Инициализация
+document.getElementById("theme-toggle").addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+});
+
 renderTable();
