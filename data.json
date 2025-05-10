@@ -21,4 +21,4 @@ const data = [
     icon: "images/1.png images/2.png",
     reference: ""
   }
-]
+];
