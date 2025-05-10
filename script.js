@@ -67,3 +67,9 @@ themeToggle.addEventListener("click", () => {
     ? "images/webIconsLogosButtons/light.png"
     : "images/webIconsLogosButtons/dark.png";
 });
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.body.classList.add("loaded");
+  }, 2000);
+});
+
