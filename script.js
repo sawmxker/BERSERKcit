@@ -70,6 +70,6 @@ themeToggle.addEventListener("click", () => {
 window.addEventListener("load", () => {
   setTimeout(() => {
     document.body.classList.add("loaded");
-  }, 2000);
+  }, 3);
 });
 
