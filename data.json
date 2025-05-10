@@ -3,8 +3,8 @@
     "id": "first_guts_sword",
     "names": {
       "en": "First Guts Sword; Pupper Slayer; Guts Child's Sword;",
-      "ru": "Первый меч Гатса;",
-      "jp": "ガッツの最初の剣 ; Gattsu no saisho no ken;"
+      "ru": "Первый меч Гатса; Щенкоубийца; Детский меч Гатса;",
+      "jp": "ガッツの最初の剣; 子犬殺し; ガッツの子供の剣;"
     },
     "base_item": "Any sword",
     "icon": "images/firstswordguts.png images/firstswordgutsleft.png",
@@ -15,10 +15,32 @@
     "names": {
       "en": "First duel with Griffith; Duel with Bazuso; Sword of reconciliation;",
       "ru": "Первая дуэль с Гриффитом; Дуэль с Базусо; Меч примирения;",
-      "jp": "和解の剣 ; Wakai no ken;"
+      "jp": "グリフィスとの最初の決闘; バズーソとの決闘; 和解の剣;"
     },
     "base_item": "Any sword, any axe",
     "icon": "images/1.png images/2.png",
     "reference": ""
+  },
+  {
+    "id": "dragonslayer_prototype",
+    "names": {
+      "en": "Dragonslayer Prototype; Early Dragonslayer;",
+      "ru": "Прототип Убийцы Драконов; Ранняя версия;",
+      "jp": "ドラゴンスレイヤーのプロトタイプ; 初期型;"
+    },
+    "base_item": "Greatsword",
+    "icon": "images/ds_proto.png",
+    "reference": "images/ref/ds_proto_ref.jpg"
+  },
+  {
+    "id": "golden_age_sword",
+    "names": {
+      "en": "Golden Age Sword; Guts' Standard Sword;",
+      "ru": "Меч Золотого Века; Стандартный меч Гатса;",
+      "jp": "黄金時代の剣; ガッツの標準剣;"
+    },
+    "base_item": "Bastard sword",
+    "icon": "images/ga_sword.png images/ga_sword_left.png",
+    "reference": "images/ref/ga_sword_ref.jpg"
   }
 ]
