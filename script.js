@@ -25,13 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     jp: ["アイコン", "表示名", "基本アイテム", "参照"]
   };
 
-  // SF Symbols mapping (example)
-  const sfSymbols = {
-    sword: "􀣌",
-    axe: "􀣋",
-    default: "􀎟"
-  };
-
   // Load data
   fetch(dataUrl)
     .then(res => {
@@ -58,17 +51,31 @@ document.addEventListener('DOMContentLoaded', () => {
     items.forEach(item => {
       const tr = document.createElement("tr");
 
-      // Icon column with SF Symbol
+      // Icon column with Font Awesome
       const iconTd = document.createElement("td");
       iconTd.classList.add("item-icons");
       
-      // Add SF Symbol
-      const symbolSpan = document.createElement("span");
-      symbolSpan.className = "sf-symbol";
-      symbolSpan.textContent = item.base_item.includes("sword") ? sfSymbols.sword : 
-                              item.base_item.includes("axe") ? sfSymbols.axe : 
-                              sfSymbols.default;
-      iconTd.appendChild(symbolSpan);
+      // Add Font Awesome icon with tooltip
+      const iconWrapper = document.createElement("div");
+      iconWrapper.className = "tooltip";
+      
+      const faIcon = document.createElement("i");
+      faIcon.className = "fa-icon";
+      
+      // Determine icon based on item type
+      if (item.base_item.includes("sword")) {
+        faIcon.classList.add("fas", "fa-sword");
+        iconWrapper.innerHTML = '<span class="tooltiptext">Sword</span>';
+      } else if (item.base_item.includes("axe")) {
+        faIcon.classList.add("fas", "fa-hatchet");
+        iconWrapper.innerHTML = '<span class="tooltiptext">Axe</span>';
+      } else {
+        faIcon.classList.add("fas", "fa-question");
+        iconWrapper.innerHTML = '<span class="tooltiptext">Unknown</span>';
+      }
+      
+      iconWrapper.prepend(faIcon);
+      iconTd.appendChild(iconWrapper);
       
       // Add original icons if available
       const icons = item.icon?.split(" ") || [];
