@@ -6,40 +6,41 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1 id="logo">
-    <img src="images/webIconsLogosButtons/logo.png" alt="Berserk Logo" height="100">
-  </h1>
-  
-  <div id="language-and-theme">
-    <button id="translate-btn" class="icon-button">
-      <img src="images/translateicon.png" alt="Language" />
-    </button>
-    <button id="theme-toggle" class="icon-button">
-      <img src="images/webIconsLogosButtons/moon.png" alt="Light Theme" />
-    </button>
+  <div id="splash-logo">
+    <img src="images/webIconsLogosButtons/logo.png" alt="Logo" />
   </div>
 
-  <table id="items-table">
-    <thead>
-      <tr>
-        <th>icon</th>
-        <th>display name</th>
-        <th>base Item</th>
-        <th>reference / source</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- JS will fill this -->
-    </tbody>
-  </table>
+  <header>
+    <img id="header-logo" src="images/webIconsLogosButtons/logo.png" alt="Logo" height="60" />
+    <div class="top-controls">
+      <button id="theme-toggle">
+        <img src="images/webIconsLogosButtons/light.png" alt="Toggle Theme" />
+      </button>
+      <button id="translate-btn">
+        <img src="images/webIconsLogosButtons/translateicon.png" alt="Translate" />
+      </button>
+      <div id="language-menu" class="language-menu hidden">
+        <button data-lang="en"><img src="images/languages/en.png" alt="English" /></button>
+        <button data-lang="ru"><img src="images/languages/ru.png" alt="Русский" /></button>
+        <button data-lang="jp"><img src="images/languages/jp.png" alt="日本語" /></button>
+      </div>
+    </div>
+  </header>
 
-  <div id="language-menu" class="hidden">
-    <button data-lang="en">English</button>
-    <button data-lang="ru">Русский</button>
-    <button data-lang="jp">日本語</button>
-  </div>
+  <main>
+    <table id="items-table">
+      <thead>
+        <tr>
+          <th>Icon</th>
+          <th>Display Name</th>
+          <th>Base Item</th>
+          <th>Reference</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
 
-  <script src="data.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
