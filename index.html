@@ -6,28 +6,41 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>🎮 CIT Resource Pack Items</h1>
-  <div>
-    <label for="language">🌐 Language:</label>
-    <select id="language">
-      <option value="en">English</option>
-      <option value="ru">Русский</option>
-      <option value="jp">日本語</option>
-    </select>
+  <h1>
+    <img src="images/webIconsLogosButtons/logo.png" alt="Berserk Logo" height="75">
+  </h1>
+
+  <!-- Кнопка перевода -->
+  <div style="position: relative;">
+    <button id="translate-btn" class="translate-button">
+      <img src="images/webIconsLogosButtons/translateicon.png" alt="Translate" />
+    </button>
+
+    <!-- Меню выбора языка -->
+    <div id="language-menu" class="language-menu hidden">
+      <button data-lang="en"><img src="images/flag-uk.png" alt="English" /></button>
+      <button data-lang="ru"><img src="images/flag-cis.png" alt="CНГ, русскоговорящие" /></button>
+      <button data-lang="jp"><img src="images/flag-jp.png" alt="日本語" /></button>
+    </div>
   </div>
+
+  <!-- Таблица -->
   <table id="items-table">
     <thead>
       <tr>
-        <th>🖼️</th>
-        <th>📛 Name</th>
-        <th>🎯 Base Item</th>
-        <th>📷 Reference</th>
+        <th>icon</th>
+        <th>display name</th>
+        <th>base item</th>
+        <th>reference / source</th>
       </tr>
     </thead>
     <tbody>
       <!-- JS will fill this -->
     </tbody>
   </table>
+
+  <!-- Язык для JS -->
+  <input type="hidden" id="language" value="en" />
 
   <script src="script.js"></script>
 </body>
