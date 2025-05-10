@@ -124,6 +124,14 @@ button img {
   height: 30px;
   border-radius: 4px;
 }
+.language-menu img {
+  height: 20px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 4px;
+  transition: transform 0.2s;
+}
+
 
 main {
   padding: 20px;
