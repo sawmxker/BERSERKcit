@@ -10,12 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentLang = localStorage.getItem('language') || "en";
   let darkMode = localStorage.getItem('darkMode') === 'true';
 
-  // Модальное окно для изображений
-  const modal = document.createElement('div');
-  modal.className = 'modal';
-  modal.innerHTML = `<span class="close">&times;</span><div class="modal-content"><img class="modal-img" src="" alt="Preview"></div>`;
-  document.body.appendChild(modal);
-
   // Переводы заголовков
   const headerTranslations = {
     en: ["Icon", "Display Name", "Base Item", "Reference"],
@@ -36,7 +30,39 @@ document.addEventListener('DOMContentLoaded', () => {
     dark: "images/moon.png"
   };
 
-  // Применить тему
+  // Модальное окно для изображений
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+  modal.innerHTML = `
+    <span class="close" title="Close">&times;</span>
+    <div class="modal-content">
+      <img class="modal-img" src="" alt="Preview" />
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  // Функция показа модального окна с изображением
+  function showModal(src) {
+    const modalImg = modal.querySelector('.modal-img');
+    modalImg.src = src;
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('active'), 10);
+  }
+
+  // Закрытие модального окна
+  modal.querySelector('.close').addEventListener('click', () => {
+    modal.classList.remove('active');
+    setTimeout(() => { modal.style.display = 'none'; }, 300);
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+      setTimeout(() => { modal.style.display = 'none'; }, 300);
+    }
+  });
+
+  // Применение темы
   function applyTheme() {
     if (darkMode) {
       document.body.classList.add('dark-mode');
@@ -49,25 +75,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Применить язык
-  function applyLanguage() {
-    langIcon.src = langIcons[currentLang];
-    langIcon.alt = currentLang.toUpperCase();
-    updateTableHeaders();
-    // Если данные уже загружены, перерисовать таблицу
-    if (window._berserkData) renderTable(window._berserkData);
+  // Обновление заголовков таблицы в зависимости от языка
+  function updateTableHeaders() {
+    const headers = headerTranslations[currentLang] || headerTranslations.en;
+    tableHeaders.forEach((th, i) => {
+      th.textContent = headers[i] || th.textContent;
+    });
   }
 
-  // Заголовки
-  function updateTableHeaders() {
-    headerTranslations[currentLang].forEach((txt, i) => {
-      if (tableHeaders[i]) tableHeaders[i].textContent = txt;
-    });
+  // Обновление иконки языка
+  function updateLangIcon() {
+    langIcon.src = langIcons[currentLang] || langIcons.en;
+    langIcon.alt = currentLang.toUpperCase();
   }
 
   // Рендер таблицы
   function renderTable(data) {
-    tableBody.innerHTML = '';
+    tableBody.innerHTML = "";
     data.forEach(item => {
       const tr = document.createElement('tr');
 
@@ -90,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // Display Name
       const nameTd = document.createElement('td');
       if (item.names && item.names[currentLang]) {
-        // Разделяем по ;
         const names = item.names[currentLang].split(';').map(n => n.trim()).filter(Boolean);
         names.forEach((name, idx) => {
           const span = document.createElement('span');
@@ -98,12 +121,14 @@ document.addEventListener('DOMContentLoaded', () => {
           nameTd.appendChild(span);
           if (idx !== names.length - 1) nameTd.appendChild(document.createElement('br'));
         });
+      } else {
+        nameTd.textContent = "";
       }
       tr.appendChild(nameTd);
 
       // Base Item
       const baseTd = document.createElement('td');
-      baseTd.textContent = item.base_item || '';
+      baseTd.textContent = item.base_item || "";
       tr.appendChild(baseTd);
 
       // Reference
@@ -122,37 +147,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Модальное окно для изображений
-  function showModal(src) {
-    const modalImg = modal.querySelector('.modal-img');
-    modalImg.src = src;
-    modal.style.display = 'block';
-    setTimeout(() => modal.classList.add('active'), 10);
-  }
-  modal.querySelector('.close').onclick = () => {
-    modal.classList.remove('active');
-    setTimeout(() => { modal.style.display = 'none'; }, 300);
-  };
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.classList.remove('active');
-      setTimeout(() => { modal.style.display = 'none'; }, 300);
-    }
+  // Переключение языка по кнопке
+  translateBtn.addEventListener('click', () => {
+    languageMenu.classList.toggle('hidden');
   });
 
-  // Переключение языка
-  translateBtn.onclick = () => {
-    languageMenu.classList.toggle('hidden');
-  };
-  languageMenu.onclick = (e) => {
-    if (e.target.closest('button[data-lang]')) {
-      const lang = e.target.closest('button[data-lang]').dataset.lang;
-      currentLang = lang;
-      localStorage.setItem('language', lang);
-      applyLanguage();
-      languageMenu.classList.add('hidden');
-    }
-  };
+  // Выбор языка из меню
+  languageMenu.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-lang]');
+    if (!btn) return;
+    currentLang = btn.dataset.lang;
+    localStorage.setItem('language', currentLang);
+    updateLangIcon();
+    updateTableHeaders();
+    if (window._berserkData) renderTable(window._berserkData);
+    languageMenu.classList.add('hidden');
+  });
+
+  // Закрытие меню при клике вне
   document.addEventListener('click', (e) => {
     if (!languageMenu.contains(e.target) && e.target !== translateBtn) {
       languageMenu.classList.add('hidden');
@@ -160,27 +172,32 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Переключение темы
-  themeToggle.onclick = () => {
+  themeToggle.addEventListener('click', () => {
     darkMode = !darkMode;
     localStorage.setItem('darkMode', darkMode);
     applyTheme();
-  };
+  });
 
-  // Загрузка данных
+  // Загрузка данных из JSON
   fetch(dataUrl)
-    .then(res => res.json())
+    .then(response => {
+      if (!response.ok) throw new Error("Failed to load data");
+      return response.json();
+    })
     .then(data => {
       window._berserkData = data;
       renderTable(data);
       updateTableHeaders();
+      updateLangIcon();
       applyTheme();
-      applyLanguage();
     })
     .catch(error => {
-      tableBody.innerHTML = `<tr><td colspan="4">Error loading data</td></tr>`;
+      tableBody.innerHTML = `<tr><td colspan="4" style="color: red;">Ошибка загрузки данных: ${error.message}</td></tr>`;
+      console.error("Ошибка загрузки данных:", error);
     });
 
-  // Инициализация темы и языка
+  // Инициализация интерфейса
+  updateLangIcon();
+  updateTableHeaders();
   applyTheme();
-  applyLanguage();
 });
