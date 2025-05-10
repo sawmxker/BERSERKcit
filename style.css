@@ -123,7 +123,7 @@ button img {
   border: none;
   background: none;
   width: 40px;  /* Увеличиваем размер кнопки */
-  height: 60px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -179,6 +179,37 @@ body.dark-mode td {
   background: #1f1f1f;
   color: #eee;
 }
+/* Стили для кнопки перевода */
+#translate-btn.active {
+  background-color: #007aff; /* синий цвет */
+  color: white; /* текст белого цвета, если он есть */
+  border-radius: 50%; /* радиус для круглой кнопки */
+  padding: 6px; /* отступы внутри кнопки */
+}
+
+/* Стили для кнопки смены темы */
+#theme-btn.active {
+  background-color: #007aff; /* синий цвет */
+  color: white; /* текст белого цвета */
+  border-radius: 50%; /* радиус для круглой кнопки */
+  padding: 6px; /* отступы внутри кнопки */
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 6px;
+  transition: background-color 0.3s, color 0.3s; /* плавные переходы для фона и цвета */
+}
+
+/* Стили для кнопки без активного состояния */
+button:hover {
+  background-color: #007aff; /* синий цвет при наведении */
+  color: white; /* текст белого цвета при наведении */
+}
+
 
 tr:hover td {
   background: #f0f0f0;
