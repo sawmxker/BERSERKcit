@@ -1,19 +1,104 @@
+/* Сброс и базовая стилизация */
 body {
   font-family: sans-serif;
-  background: #1e1e1e;
-  color: #fff;
-  padding: 2rem;
+  margin: 20px;
+  background-color: #f9f9f9;
+  color: #222;
 }
+
+/* Логотип */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Таблица */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  margin-top: 20px;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border-radius: 8px;
+  overflow: hidden;
 }
+
 th, td {
-  border: 1px solid #444;
-  padding: 0.5rem;
-  text-align: center;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
 }
-select {
-  font-size: 1rem;
+
+th {
+  background-color: #fafafa;
+}
+
+/* Иконки предметов */
+.item-icons img {
+  height: 40px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* Кнопка перевода */
+.translate-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.translate-button img {
+  width: 28px;
+  height: 28px;
+}
+
+.translate-button:active {
+  background-color: rgba(0, 120, 255, 0.2);
+}
+
+/* Меню выбора языка */
+.language-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  display: flex;
+  gap: 12px;
+  padding: 10px 14px;
+  backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.language-menu.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+}
+
+.language-menu button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.language-menu img {
+  width: 28px;
+  height: 20px;
+  border-radius: 4px;
+  transition: transform 0.2s;
+}
+
+.language-menu img:hover {
+  transform: scale(1.1);
 }
