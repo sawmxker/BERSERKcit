@@ -1,18 +1,39 @@
+:root {
+  --primary-color: #4361ee;
+  --primary-hover: #3a56d4;
+  --bg-color: #f8f9fa;
+  --text-color: #212529;
+  --card-bg: #ffffff;
+  --border-color: #e9ecef;
+  --header-bg: rgba(255, 255, 255, 0.9);
+  --th-bg: #f1f3f5;
+  --transition: all 0.3s ease;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4cc9f0;
+  --primary-hover: #3aa8d8;
+  --bg-color: #121212;
+  --text-color: #e9ecef;
+  --card-bg: #1e1e1e;
+  --border-color: #333;
+  --header-bg: rgba(30, 30, 30, 0.9);
+  --th-bg: #2b2b2b;
+}
+
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-  background-color: #f4f4f7;
-  color: #333;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-body.dark-mode {
-  background-color: #121212;
-  color: #ddd;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: var(--transition);
+  line-height: 1.6;
+  min-height: 100vh;
 }
 
 #header-logo, #items-table {
@@ -30,24 +51,28 @@ body.loaded #items-table {
 #splash-logo {
   position: fixed;
   inset: 0;
-  background: #000;
+  background: var(--bg-color);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  animation: splash-fade 2s forwards;
+  animation: splash-fade 1.5s forwards;
 }
 
 #splash-logo img {
   height: 100px;
-  animation: splash-sequence 1.5s ease-in-out forwards;
+  animation: splash-sequence 1s ease-in-out forwards;
 }
 
 @keyframes splash-sequence {
-  0% { filter: brightness(0) }
-  20% { filter: brightness(1) hue-rotate(0deg); }
-  30% { filter: brightness(1) hue-rotate(360deg); }
-  100% { filter: none; }
+  0% { 
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes splash-fade {
@@ -57,26 +82,32 @@ body.loaded #items-table {
 }
 
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 24px;
-  background: rgba(255,255,255,0.6);
+  padding: 1rem 2rem;
+  background: var(--header-bg);
   backdrop-filter: blur(12px);
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-body.dark-mode header {
-  background: rgba(32,32,32,0.6);
-  border-color: #444;
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#header-logo {
+  height: 50px;
+  width: auto;
 }
 
 .top-controls {
   display: flex;
-  gap: 10px;
+  gap: 1rem;
   align-items: center;
 }
 
@@ -85,31 +116,54 @@ button {
   border: none;
   cursor: pointer;
   border-radius: 50%;
-  padding: 6px;
-  transition: background-color 0.3s;
+  padding: 0.5rem;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
 }
 
-button img {
-  width: 28px;
-  height: 28px;
+button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+button i {
+  font-size: 1.2rem;
+  color: var(--text-color);
 }
 
 #translate-btn.active {
-  background-color: #007aff;
+  background-color: var(--primary-color);
+  color: white;
+}
+
+#translate-btn.active i {
+  color: white;
+}
+
+.language-selector {
+  position: relative;
 }
 
 .language-menu {
   position: absolute;
-  top: 60px;
-  right: 16px;
+  top: 50px;
+  right: 0;
   display: flex;
-  gap: 10px;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.5);
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--header-bg);
   backdrop-filter: blur(10px);
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-  transition: opacity 0.3s, transform 0.3s;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: var(--transition);
+  z-index: 10;
 }
 
 .language-menu.hidden {
@@ -120,87 +174,94 @@ button img {
 
 .language-menu button {
   padding: 0;
-  border: none;
-  background: none;
-  width: 40px;  /* Увеличиваем размер кнопки */
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 36px;
+  height: 36px;
 }
 
 .language-menu img {
   width: 100%;
-  height: 140%;
-  object-fit: contain; /* Чтобы изображение не обрезалось */
+  height: 100%;
+  object-fit: contain;
   border-radius: 4px;
   transition: transform 0.2s;
 }
 
+.language-menu img:hover {
+  transform: scale(1.1);
+}
+
 main {
-  padding: 20px;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.table-container {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 table {
-  width: 90%;
-  max-width: 900px;
-  margin: auto;
+  width: 100%;
   border-collapse: collapse;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  background: white;
-  transition: transform 0.3s;
-}
-
-body.dark-mode table {
-  background: #1f1f1f;
+  background: var(--card-bg);
+  transition: var(--transition);
 }
 
 th, td {
-  padding: 16px;
+  padding: 1rem;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--border-color);
 }
 
 th {
-  background: #f9f9f9;
+  background: var(--th-bg);
+  font-weight: 600;
+  position: sticky;
+  top: 0;
 }
-
-td {
-  background: #fff;
-}
-
-body.dark-mode th {
-  background: #2c2c2c;
-}
-
-body.dark-mode td {
-  background: #1f1f1f;
-  color: #dbd9d9;
-}
-
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  border-radius: 50%;
-  padding: 6px;
-  transition: background-color 0.3s, color 0.3s; /* плавные переходы для фона и цвета */
-}
-
-
 
 tr:hover td {
-  background: #007aff;
+  background-color: rgba(67, 97, 238, 0.1);
 }
 
-body.dark-mode tr:hover td {
-  background: #007aff;
+.item-icons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .item-icons img {
   height: 40px;
-  margin-right: 6px;
-  vertical-align: middle;
+  width: auto;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
+.ref-image {
+  max-height: 60px;
+  max-width: 100px;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 1rem;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  th, td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .item-icons img {
+    height: 30px;
+  }
 }
