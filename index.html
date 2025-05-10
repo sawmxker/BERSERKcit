@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>CIT Pack Items</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>CIT Items List</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Список предметов CIT</h1>
-  <div id="item-list"></div>
+  <h1>🎮 CIT Resource Pack Items</h1>
+  <div>
+    <label for="language">🌐 Language:</label>
+    <select id="language">
+      <option value="en">English</option>
+      <option value="ru">Русский</option>
+      <option value="jp">日本語</option>
+    </select>
+  </div>
+  <table id="items-table">
+    <thead>
+      <tr>
+        <th>🖼️</th>
+        <th>📛 Name</th>
+        <th>🎯 Base Item</th>
+        <th>📷 Reference</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- JS will fill this -->
+    </tbody>
+  </table>
 
-  <script>
-    fetch('items.json')
-      .then(response => response.json())
-      .then(items => {
-        const container = document.getElementById('item-list');
-        items.forEach(item => {
-          const div = document.createElement('div');
-          div.className = 'item';
-          div.innerHTML = `
-            <img src="${item.image}" alt="${item.name}" />
-            <h2>${item.name}</h2>
-            <p><strong>ID:</strong> ${item.id}</p>
-            <p><strong>Как получить:</strong> ${item.how}</p>
-          `;
-          container.appendChild(div);
-        });
-      });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
