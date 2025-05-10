@@ -4,14 +4,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const translateBtn = document.getElementById("translate-btn");
   const languageMenu = document.getElementById("language-menu");
   const themeToggle = document.getElementById("theme-toggle");
+  const tableHeaders = document.querySelectorAll("#items-table th");
   let currentLang = localStorage.getItem('language') || "en";
-  let currentTheme = localStorage.getItem('theme') || "light";
 
-  // Apply saved theme
-  if (currentTheme === 'dark') {
-    document.body.setAttribute('data-theme', 'dark');
-    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-  }
+  // Translations for table headers
+  const headerTranslations = {
+    en: ["Icon", "Display Name", "Base Item", "Reference"],
+    ru: ["Иконка", "Название", "Базовый предмет", "Референс"],
+    jp: ["アイコン", "表示名", "基本アイテム", "参照"]
+  };
 
   // Load data
   fetch(dataUrl)
@@ -19,15 +20,18 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!res.ok) throw new Error('Network response was not ok');
       return res.json();
     })
-    .then(data => renderTable(data))
+    .then(data => {
+      renderTable(data);
+      updateTableHeaders();
+    })
     .catch(error => {
       console.error('Error loading data:', error);
-      tableBody.innerHTML = `<tr><td colspan="4">Error loading data. Please try again later.</td></tr>`;
+      tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 20px; font-weight: bold;">Error loading data. Please try again later.</td></tr>`;
     });
 
   function renderTable(items) {
     if (!items || items.length === 0) {
-      tableBody.innerHTML = `<tr><td colspan="4">No items found</td></tr>`;
+      tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 20px; font-weight: bold;">No items found</td></tr>`;
       return;
     }
 
@@ -53,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const nameTd = document.createElement("td");
       const names = item.names?.[currentLang]?.split(";") || [];
       nameTd.textContent = names[0]?.trim() || "N/A";
+      nameTd.style.fontWeight = "bold";
       if (names.length > 1) {
         nameTd.title = names.map(n => n.trim()).filter(n => n).join("\n");
       }
@@ -60,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Base item column
       const baseTd = document.createElement("td");
       baseTd.textContent = item.base_item || "Any";
+      baseTd.style.fontWeight = "bold";
 
       // Reference column
       const refTd = document.createElement("td");
@@ -72,10 +78,18 @@ document.addEventListener('DOMContentLoaded', () => {
         refTd.appendChild(img);
       } else {
         refTd.textContent = "-";
+        refTd.style.fontWeight = "bold";
       }
 
       tr.append(iconTd, nameTd, baseTd, refTd);
       tableBody.appendChild(tr);
+    });
+  }
+
+  function updateTableHeaders() {
+    tableHeaders.forEach((header, index) => {
+      header.textContent = headerTranslations[currentLang]?.[index] || header.textContent;
+      header.style.fontWeight = "bold";
     });
   }
 
@@ -92,7 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('language', currentLang);
       fetch(dataUrl)
         .then(res => res.json())
-        .then(data => renderTable(data));
+        .then(data => {
+          renderTable(data);
+          updateTableHeaders();
+        });
       languageMenu.classList.add("hidden");
       translateBtn.classList.remove("active");
     });
@@ -100,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Close language menu when clicking outside
   document.addEventListener('click', (e) => {
-    if (!languageMenu.contains(e.target) {
+    if (!languageMenu.contains(e.target) && e.target !== translateBtn) {
       languageMenu.classList.add("hidden");
       translateBtn.classList.remove("active");
     }
@@ -108,17 +125,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Theme toggle
   themeToggle.addEventListener("click", () => {
-    const isDark = document.body.getAttribute('data-theme') === 'dark';
-    if (isDark) {
-      document.body.removeAttribute('data-theme');
-      themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-      localStorage.setItem('theme', 'light');
-    } else {
-      document.body.setAttribute('data-theme', 'dark');
-      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-      localStorage.setItem('theme', 'dark');
-    }
+    document.body.classList.toggle("dark-mode");
+    localStorage.setItem('theme', document.body.classList.contains("dark-mode") ? 'dark' : 'light');
+    
+    // Update moon/sun icon
+    const isDarkMode = document.body.classList.contains("dark-mode");
+    themeToggle.innerHTML = isDarkMode 
+      ? '<img src="images/webIconsLogosButtons/moon.png" alt="Light mode">'
+      : '<img src="images/webIconsLogosButtons/moon.png" alt="Dark mode">';
   });
+
+  // Apply saved theme and icon
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add("dark-mode");
+    themeToggle.innerHTML = '<img src="images/webIconsLogosButtons/moon.png" alt="Light mode">';
+  } else {
+    themeToggle.innerHTML = '<img src="images/webIconsLogosButtons/moon.png" alt="Dark mode">';
+  }
 
   // Splash screen and load animation
   window.addEventListener("load", () => {
