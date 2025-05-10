@@ -19,6 +19,38 @@ h1 {
   margin-top: 30px;
 }
 
+#logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation: logo-animation 2s ease-out forwards;
+}
+
+@keyframes logo-animation {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+    filter: brightness(1.5) contrast(1.5);
+  }
+  50% {
+    filter: brightness(0.5) contrast(0.5);
+  }
+  80% {
+    filter: brightness(1.2) contrast(1.2);
+  }
+  100% {
+    filter: none;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Стиль для кнопок перевода */
 #translate-btn {
   background: none;
   border: none;
@@ -80,10 +112,11 @@ h1 {
   transform: scale(1.1);
 }
 
+/* Таблица */
 table {
-  width: 100%;
+  width: 80%;
+  margin: 100px auto;
   border-collapse: collapse;
-  margin-top: 20px;
   background-color: white;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
@@ -118,12 +151,7 @@ tr:hover {
   background-color: #f9f9f9;
 }
 
-.item-icons img {
-  height: 40px;
-  margin-right: 8px;
-  vertical-align: middle;
-}
-
+/* Изменения для темной темы */
 .dark-mode table {
   background-color: #2d2d2d;
 }
@@ -144,12 +172,37 @@ tr:hover {
   background-color: #333;
 }
 
-#translate-btn {
-  background-color: #f1f1f1;
+/* Смена темы */
+#theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
   border-radius: 50%;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  position: absolute;
+  top: 20px;
+  right: 70px;
+  transition: background-color 0.3s ease;
 }
 
+#theme-toggle img {
+  width: 28px;
+  height: 28px;
+}
+
+#theme-toggle:active {
+  background-color: rgba(255, 223, 0, 0.2);
+}
+
+.dark-mode #theme-toggle img {
+  filter: brightness(0.5);
+}
+
+#theme-toggle.active {
+  background-color: #f9f9f9;
+}
+
+/* Кнопка активного перевода */
 #translate-btn.active {
   background-color: #3498db;
 }
@@ -160,4 +213,13 @@ tr:hover {
 
 .dark-mode #translate-btn.active {
   background-color: #2980b9;
+}
+
+/* Кнопка выбора темы (солнце/луна) */
+#theme-toggle img {
+  transition: filter 0.3s ease;
+}
+
+body.dark-mode #theme-toggle img {
+  filter: invert(1);
 }
