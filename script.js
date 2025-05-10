@@ -11,7 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const loadingIndicator = document.getElementById("loading-indicator");
   const noResults = document.getElementById("no-results");
   const splashScreen = document.getElementById("splash-screen");
+  const donateBtn = document.getElementById("donate-btn");
+  const donateModal = document.getElementById("donate-modal");
+  const closeDonateModal = donateModal.querySelector(".close");
+  const tempDonateLink = document.getElementById("temp-donate-link");
   const tableHeaders = document.querySelectorAll("#items-table th");
+  const copyrightTexts = document.querySelectorAll(".copyright");
   
   let currentLang = localStorage.getItem('language') || "en";
   let allItems = [];
@@ -34,19 +39,28 @@ document.addEventListener('DOMContentLoaded', () => {
       searchPlaceholder: "Search items...",
       noResults: "No items found matching your search",
       loading: "Loading items...",
-      headers: ["Icon", "Display Name", "Base Item", "Reference"]
+      headers: ["Icon", "Display Name", "Base Item", "Reference"],
+      donateTitle: "Donation",
+      donateText: "Donation system is in progress. Please check back later!",
+      btnText: "Temporary Link"
     },
     ru: {
       searchPlaceholder: "Поиск предметов...",
       noResults: "Ничего не найдено",
       loading: "Загрузка...",
-      headers: ["Иконка", "Название", "Базовый предмет", "Референс"]
+      headers: ["Иконка", "Название", "Базовый предмет", "Референс"],
+      donateTitle: "Донат",
+      donateText: "Система доната в разработке. Загляните позже!",
+      btnText: "Временная ссылка"
     },
     jp: {
       searchPlaceholder: "アイテムを検索...",
       noResults: "該当するアイテムが見つかりません",
       loading: "読み込み中...",
-      headers: ["アイコン", "表示名", "基本アイテム", "参照"]
+      headers: ["アイコン", "表示名", "基本アイテム", "参照"],
+      donateTitle: "寄付",
+      donateText: "寄付システムは準備中です。 また後で確認してください！",
+      btnText: "一時的なリンク"
     }
   };
 
@@ -276,6 +290,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Update loading text
     loadingIndicator.querySelector('span').textContent = translations[currentLang].loading;
+    
+    // Update copyright text visibility
+    copyrightTexts.forEach(text => {
+      text.style.display = text.dataset.lang === currentLang ? 'block' : 'none';
+    });
+    
+    // Update donate modal content
+    donateModal.querySelector('h3').textContent = translations[currentLang].donateTitle;
+    donateModal.querySelector('p').textContent = translations[currentLang].donateText;
+    tempDonateLink.textContent = translations[currentLang].btnText;
   }
 
   // Apply saved settings from localStorage
@@ -285,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.add("dark-mode");
       themeToggle.innerHTML = '<img src="images/webIconsLogosButtons/sun.png" alt="Light mode">';
     } else {
-      themeToggle.innerHTML = '<img src="images/webIconsLogosButtons/moon.png" alt="Dark mode">';
+      themeToggle.innerHTML = '<img src="images/webIconsLogosButtons/moon-white.png" alt="Dark mode">';
     }
     
     // Language
@@ -324,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isDarkMode = document.body.classList.contains("dark-mode");
       themeToggle.innerHTML = isDarkMode 
         ? '<img src="images/webIconsLogosButtons/sun.png" alt="Light mode">'
-        : '<img src="images/webIconsLogosButtons/moon.png" alt="Dark mode">';
+        : '<img src="images/webIconsLogosButtons/moon-white.png" alt="Dark mode">';
     });
 
     // Search functionality
@@ -346,11 +370,33 @@ document.addEventListener('DOMContentLoaded', () => {
       searchInput.focus();
     });
 
+    // Donate button
+    donateBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      donateModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    });
+
+    closeDonateModal.addEventListener('click', () => {
+      donateModal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    });
+
+    tempDonateLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert(translations[currentLang].donateText);
+    });
+
     // Close language menu when clicking outside
     document.addEventListener('click', (e) => {
       if (!languageMenu.contains(e.target) && e.target !== translateBtn) {
         languageMenu.classList.add("hidden");
         translateBtn.classList.remove("active");
+      }
+      
+      if (e.target === donateModal) {
+        donateModal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
       }
     });
 
@@ -373,6 +419,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!languageMenu.classList.contains('hidden')) {
           languageMenu.classList.add('hidden');
           translateBtn.classList.remove('active');
+        }
+        if (!donateModal.classList.contains('hidden')) {
+          donateModal.classList.add('hidden');
+          document.body.style.overflow = 'auto';
         }
       }
     });
