@@ -8,7 +8,7 @@
   --header-bg: rgba(255, 255, 255, 0.9);
   --th-bg: #f1f3f5;
   --transition: all 0.3s ease;
-  --sf-blue: #007aff;
+  --icon-color: #007aff;
 }
 
 body.dark-mode {
@@ -20,7 +20,7 @@ body.dark-mode {
   --border-color: #333;
   --header-bg: rgba(30, 30, 30, 0.9);
   --th-bg: #2b2b2b;
-  --sf-blue: #0a84ff;
+  --icon-color: #0a84ff;
 }
 
 * {
@@ -36,6 +36,113 @@ body {
   transition: var(--transition);
   line-height: 1.6;
   min-height: 100vh;
+}
+
+/* Header styles */
+header {
+  padding: 1rem 2rem;
+  background: var(--header-bg);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#header-logo {
+  height: 50px;
+  width: auto;
+}
+
+/* Controls */
+.top-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 0.5rem;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+button img {
+  width: 28px;
+  height: 28px;
+}
+
+#translate-btn.active {
+  background-color: var(--primary-color);
+}
+
+/* Language menu */
+.language-selector {
+  position: relative;
+}
+
+.language-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--header-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: var(--transition);
+  z-index: 10;
+}
+
+.language-menu.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+}
+
+.language-menu button {
+  padding: 0;
+  width: 36px;
+  height: 36px;
+}
+
+.language-menu img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+  transition: transform 0.2s;
+}
+
+.language-menu img:hover {
+  transform: scale(1.1);
 }
 
 /* Table styles */
@@ -100,7 +207,6 @@ th:nth-child(4), td:nth-child(4) { width: 150px; } /* Reference */
   width: auto;
   border-radius: 4px;
   object-fit: contain;
-  color: var(--sf-blue); /* For SF Symbols */
 }
 
 .ref-image {
@@ -108,6 +214,43 @@ th:nth-child(4), td:nth-child(4) { width: 150px; } /* Reference */
   max-width: 150px;
   border-radius: 4px;
   object-fit: contain;
+}
+
+/* Font Awesome icons */
+.fa-icon {
+  font-size: 24px;
+  margin-right: 8px;
+  color: var(--icon-color);
+}
+
+/* Tooltip for icons */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  border: 1px solid var(--border-color);
+  font-weight: normal;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
 
 /* Image modal */
@@ -146,16 +289,12 @@ th:nth-child(4), td:nth-child(4) { width: 150px; } /* Reference */
   cursor: pointer;
 }
 
-/* SF Symbols */
-.sf-symbol {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif;
-  font-size: 24px;
-  color: var(--sf-blue);
-  margin-right: 8px;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
+  header {
+    padding: 1rem;
+  }
+  
   th, td {
     padding: 0.8rem;
     font-size: 0.9rem;
