@@ -1,225 +1,165 @@
-/* Основной стиль для темы */
+обнови мой ксс
+
+/\* Основной стиль для темы \*/
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f7;
-  color: #333;
-  transition: background-color 0.3s, color 0.3s;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+margin: 0;
+padding: 0;
+background-color: #f4f4f7;
+color: #333;
+transition: background-color 0.3s, color 0.3s;
 }
 
-/* Тема темного фона */
+/\* Тема темного фона \*/
 body.dark-mode {
-  background-color: #1e1e1e;
-  color: #ddd;
+background-color: #1e1e1e;
+color: #ddd;
 }
 
 h1 {
-  text-align: center;
-  margin-top: 30px;
+text-align: center;
+margin-top: 30px;
 }
 
-#logo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  animation: logo-animation 2s ease-out forwards;
+\#translate-btn {
+background: none;
+border: none;
+cursor: pointer;
+padding: 10px;
+border-radius: 50%;
+transition: background-color 0.3s ease;
+position: absolute;
+top: 20px;
+right: 20px;
 }
 
-@keyframes logo-animation {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0);
-  }
-  30% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.2);
-    filter: brightness(1.5) contrast(1.5);
-  }
-  50% {
-    filter: brightness(0.5) contrast(0.5);
-  }
-  80% {
-    filter: brightness(1.2) contrast(1.2);
-  }
-  100% {
-    filter: none;
-    transform: translate(-50%, -50%) scale(1);
-  }
+\#translate-btn img {
+width: 28px;
+height: 28px;
 }
 
-/* Стиль для кнопок перевода */
-#translate-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  border-radius: 50%;
-  transition: background-color 0.3s ease;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-
-#translate-btn img {
-  width: 28px;
-  height: 28px;
-}
-
-#translate-btn:active {
-  background-color: rgba(0, 120, 255, 0.2);
+\#translate-btn\:active {
+background-color: rgba(0, 120, 255, 0.2);
 }
 
 .language-menu {
-  position: absolute;
-  top: 60px;
-  right: 20px;
-  display: flex;
-  gap: 12px;
-  padding: 10px 14px;
-  backdrop-filter: blur(12px);
-  background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  z-index: 999;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  opacity: 1;
-  transform: translateY(0);
+position: absolute;
+top: 60px;
+right: 20px;
+display: flex;
+gap: 12px;
+padding: 10px 14px;
+backdrop-filter: blur(12px);
+background-color: rgba(255, 255, 255, 0.4);
+border-radius: 16px;
+box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+z-index: 999;
+transition: opacity 0.3s ease, transform 0.3s ease;
+opacity: 1;
+transform: translateY(0);
 }
 
 .language-menu.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-10px);
+opacity: 0;
+pointer-events: none;
+transform: translateY(-10px);
 }
 
 .language-menu button {
-  background: none;
-  border: none;
-  cursor: pointer;
+background: none;
+border: none;
+cursor: pointer;
 }
 
 .language-menu img {
-  width: 28px;
-  height: 20px;
-  border-radius: 4px;
-  transition: transform 0.2s;
+width: 28px;
+height: 20px;
+border-radius: 4px;
+transition: transform 0.2s;
 }
 
-.language-menu img:hover {
-  transform: scale(1.1);
+.language-menu img\:hover {
+transform: scale(1.1);
 }
 
-/* Таблица */
 table {
-  width: 80%;
-  margin: 100px auto;
-  border-collapse: collapse;
-  background-color: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform 0.3s ease;
+width: 100%;
+border-collapse: collapse;
+margin-top: 20px;
+background-color: white;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+border-radius: 12px;
+overflow: hidden;
+transition: transform 0.3s ease;
 }
 
-table:hover {
-  transform: scale(1.02);
+table\:hover {
+transform: scale(1.02);
 }
 
 th, td {
-  padding: 16px;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-  transition: background-color 0.3s ease;
+padding: 16px;
+text-align: left;
+border-bottom: 1px solid #eee;
+transition: background-color 0.3s ease;
 }
 
 th {
-  background-color: #f9f9f9;
+background-color: #f9f9f9;
 }
 
 td {
-  background-color: #fff;
+background-color: #fff;
 }
 
-td:hover {
-  background-color: #f1f1f1;
+td\:hover {
+background-color: #f1f1f1;
 }
 
-tr:hover {
-  background-color: #f9f9f9;
+tr\:hover {
+background-color: #f9f9f9;
 }
 
-/* Изменения для темной темы */
+.item-icons img {
+height: 40px;
+margin-right: 8px;
+vertical-align: middle;
+}
+
 .dark-mode table {
-  background-color: #2d2d2d;
+background-color: #2d2d2d;
 }
 
 .dark-mode th {
-  background-color: #3c3c3c;
+background-color: #3c3c3c;
 }
 
 .dark-mode td {
-  background-color: #3a3a3a;
+background-color: #3a3a3a;
 }
 
-.dark-mode td:hover {
-  background-color: #444;
+.dark-mode td\:hover {
+background-color: #444;
 }
 
-.dark-mode tr:hover {
-  background-color: #333;
+.dark-mode tr\:hover {
+background-color: #333;
 }
 
-/* Смена темы */
-#theme-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  border-radius: 50%;
-  position: absolute;
-  top: 20px;
-  right: 70px;
-  transition: background-color 0.3s ease;
+\#translate-btn {
+background-color: #f1f1f1;
+border-radius: 50%;
+transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-#theme-toggle img {
-  width: 28px;
-  height: 28px;
-}
-
-#theme-toggle:active {
-  background-color: rgba(255, 223, 0, 0.2);
-}
-
-.dark-mode #theme-toggle img {
-  filter: brightness(0.5);
-}
-
-#theme-toggle.active {
-  background-color: #f9f9f9;
-}
-
-/* Кнопка активного перевода */
-#translate-btn.active {
-  background-color: #3498db;
+\#translate-btn.active {
+background-color: #3498db;
 }
 
 .dark-mode #translate-btn {
-  background-color: #444;
+background-color: #444;
 }
 
 .dark-mode #translate-btn.active {
-  background-color: #2980b9;
-}
-
-/* Кнопка выбора темы (солнце/луна) */
-#theme-toggle img {
-  transition: filter 0.3s ease;
-}
-
-body.dark-mode #theme-toggle img {
-  filter: invert(1);
+background-color: #2980b9;
 }
