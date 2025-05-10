@@ -177,22 +177,7 @@ body.dark-mode th {
 
 body.dark-mode td {
   background: #1f1f1f;
-  color: #eee;
-}
-/* Стили для кнопки перевода */
-#translate-btn.active {
-  background-color: #007aff; /* синий цвет */
-  color: white; /* текст белого цвета, если он есть */
-  border-radius: 50%; /* радиус для круглой кнопки */
-  padding: 6px; /* отступы внутри кнопки */
-}
-
-/* Стили для кнопки смены темы */
-#theme-btn.active {
-  background-color: #007aff; /* синий цвет */
-  color: white; /* текст белого цвета */
-  border-radius: 50%; /* радиус для круглой кнопки */
-  padding: 6px; /* отступы внутри кнопки */
+  color: #dbd9d9;
 }
 
 button {
@@ -204,19 +189,14 @@ button {
   transition: background-color 0.3s, color 0.3s; /* плавные переходы для фона и цвета */
 }
 
-/* Стили для кнопки без активного состояния */
-button:hover {
-  background-color: #007aff; /* синий цвет при наведении */
-  color: white; /* текст белого цвета при наведении */
-}
 
 
 tr:hover td {
-  background: #f0f0f0;
+  background: #007aff;
 }
 
 body.dark-mode tr:hover td {
-  background: #2b2b2b;
+  background: #007aff;
 }
 
 .item-icons img {
