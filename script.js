@@ -1,96 +1,69 @@
-const data = [
-  {
-    id: "first_guts_sword",
-    names: {
-      en: "First Guts Sword; Pupper Slayer; Guts Child's Sword;",
-      ru: "Первый меч Гатса;",
-      jp: "ガッツの最初の剣 ; Gattsu no saisho no ken;"
-    },
-    base_item: "Any sword",
-    icon: "images/firstswordguts.png images/firstswordgutsleft.png",
-    reference: "images/ref1.jpg"
-  },
-  {
-    id: "first_duel_with_griffith",
-    names: {
-      en: "First duel with Griffith; Duel with Bazuso; Sword of reconciliation; Rematch sword; Great sword of reconciliation; Rematch great sword;",
-      ru: "Первая дуэль с Гриффитом; Дуэль с Базусо; Меч примирения;",
-      jp: "和解の剣 ; Wakai no ken;"
-    },
-    base_item: "Any sword, any axe",
-    icon: "images/1.png images/2.png",
-    reference: ""
-  }
-];
-
-function getCurrentLanguage() {
-  return document.getElementById("language").value || "en";
-}
-
-function renderTable() {
-  const tbody = document.querySelector("#items-table tbody");
-  tbody.innerHTML = "";
-  const lang = getCurrentLanguage();
-
-  data.forEach(item => {
-    const row = document.createElement("tr");
-
-    const iconCell = document.createElement("td");
-    const icons = item.icon.split(" ");
-    iconCell.className = "item-icons";
-    icons.forEach((src, idx) => {
-      const img = document.createElement("img");
-      img.src = src;
-      img.alt = item.id;
-      img.title = idx === 0 ? "Main hand" : "Off hand";
-      iconCell.appendChild(img);
-    });
-    row.appendChild(iconCell);
-
-    const nameCell = document.createElement("td");
-    nameCell.innerText = item.names[lang] || item.names.en;
-    row.appendChild(nameCell);
-
-    const baseItemCell = document.createElement("td");
-    baseItemCell.innerText = item.base_item;
-    row.appendChild(baseItemCell);
-
-    const refCell = document.createElement("td");
-    if (item.reference) {
-      const img = document.createElement("img");
-      img.src = item.reference;
-      img.alt = "Reference";
-      img.style.height = "40px";
-      refCell.appendChild(img);
-    } else {
-      refCell.innerText = "-";
-    }
-    row.appendChild(refCell);
-
-    tbody.appendChild(row);
-  });
-}
-
-document.getElementById("language").addEventListener("change", renderTable);
-
+const languageSelect = document.getElementById("language");
+const itemsTableBody = document.getElementById("items-table").getElementsByTagName("tbody")[0];
+const themeToggleButton = document.getElementById("theme-toggle");
 const translateBtn = document.getElementById("translate-btn");
 const languageMenu = document.getElementById("language-menu");
 
-translateBtn.addEventListener("click", () => {
-  languageMenu.classList.toggle("hidden");
-});
+let currentLanguage = 'en';
 
-languageMenu.querySelectorAll("button").forEach(btn => {
-  btn.addEventListener("click", e => {
-    const lang = e.currentTarget.dataset.lang;
-    document.getElementById("language").value = lang;
-    document.getElementById("language").dispatchEvent(new Event("change"));
+function createTableRow(item) {
+  const row = document.createElement('tr');
+  
+  const iconCell = document.createElement('td');
+  const iconImages = item.icon.split(' ').map(imgSrc => {
+    const img = document.createElement('img');
+    img.src = imgSrc;
+    return img;
+  });
+  iconCell.append(...iconImages);
+  
+  const nameCell = document.createElement('td');
+  nameCell.textContent = item.names[currentLanguage];
+
+  const baseItemCell = document.createElement('td');
+  baseItemCell.textContent = item.base_item;
+
+  const referenceCell = document.createElement('td');
+  if (item.reference) {
+    const refImg = document.createElement('img');
+    refImg.src = item.reference;
+    referenceCell.appendChild(refImg);
+  }
+
+  row.append(iconCell, nameCell, baseItemCell, referenceCell);
+  return row;
+}
+
+function renderTable() {
+  itemsTableBody.innerHTML = '';
+  data.forEach(item => {
+    const row = createTableRow(item);
+    itemsTableBody.appendChild(row);
+  });
+}
+
+function toggleLanguageMenu() {
+  languageMenu.classList.toggle("hidden");
+}
+
+function changeLanguage(lang) {
+  currentLanguage = lang;
+  renderTable();
+}
+
+function toggleTheme() {
+  document.body.classList.toggle("dark-theme");
+}
+
+translateBtn.addEventListener("click", toggleLanguageMenu);
+
+languageMenu.querySelectorAll('button').forEach(button => {
+  button.addEventListener('click', () => {
+    changeLanguage(button.getAttribute("data-lang"));
     languageMenu.classList.add("hidden");
   });
 });
 
-document.getElementById("theme-toggle").addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
-});
+themeToggleButton.addEventListener("click", toggleTheme);
 
 renderTable();
