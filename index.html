@@ -29,8 +29,20 @@
           <i class="fas fa-search"></i>
         </button>
         <button id="theme-toggle" aria-label="Toggle theme">
-          <img src="images/webIconsLogosButtons/moon.png" alt="Dark mode" />
+          <img src="images/webIconsLogosButtons/moon-white.png" alt="Dark mode" />
         </button>
+        <a href="https://discord.gg/FMjrzVBSVe" class="control-btn" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+          <i class="fab fa-discord"></i>
+        </a>
+        <a href="https://www.curseforge.com/minecraft/texture-packs/berserk-cit-pack" class="control-btn" target="_blank" rel="noopener noreferrer" aria-label="Download">
+          <i class="fas fa-download"></i>
+        </a>
+        <a href="https://www.planetminecraft.com/texture-pack/berserk-swords-pack-sawmaker-cit/" class="control-btn" target="_blank" rel="noopener noreferrer" aria-label="PMC">
+          <i class="fas fa-globe"></i>
+        </a>
+        <a href="#" class="control-btn donate-btn" aria-label="Donate" id="donate-btn">
+          <i class="fas fa-heart"></i>
+        </a>
         <div class="language-selector">
           <button id="translate-btn" aria-label="Change language">
             <i class="fas fa-language"></i>
@@ -74,6 +86,27 @@
       </div>
     </div>
   </main>
+
+  <footer>
+    <div class="footer-content">
+      <p class="copyright" data-lang="en">Created by sawmxker. Do not redistribute or claim as your own.</p>
+      <p class="copyright" data-lang="ru">Создано sawmxker. Не распространяйте и не выдавайте за своё.</p>
+      <p class="copyright" data-lang="jp">sawmxkerによって作成されました。再配布や自作発言を禁止します。</p>
+    </div>
+  </footer>
+
+  <div id="donate-modal" class="modal hidden">
+    <div class="modal-content small">
+      <span class="close">&times;</span>
+      <h3 data-lang="en">Donation</h3>
+      <h3 data-lang="ru">Донат</h3>
+      <h3 data-lang="jp">寄付</h3>
+      <p data-lang="en">Donation system is in progress. Please check back later!</p>
+      <p data-lang="ru">Система доната в разработке. Загляните позже!</p>
+      <p data-lang="jp">寄付システムは準備中です。 また後で確認してください！</p>
+      <a href="#" class="btn" id="temp-donate-link">Temporary Link</a>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
