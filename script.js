@@ -7,6 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const tableHeaders = document.querySelectorAll("#items-table th");
   let currentLang = localStorage.getItem('language') || "en";
 
+  // Create modal for image preview
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+  modal.innerHTML = `
+    <span class="close">&times;</span>
+    <div class="modal-content">
+      <img class="modal-img" src="" alt="Enlarged view">
+    </div>
+  `;
+  document.body.appendChild(modal);
+
   // Translations for table headers
   const headerTranslations = {
     en: ["Icon", "Display Name", "Base Item", "Reference"],
@@ -23,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(data => {
       renderTable(data);
       updateTableHeaders();
+      initImageModals();
     })
     .catch(error => {
       console.error('Error loading data:', error);
@@ -39,9 +51,33 @@ document.addEventListener('DOMContentLoaded', () => {
     items.forEach(item => {
       const tr = document.createElement("tr");
 
-      // Icon column
+      // Icon column with Font Awesome
       const iconTd = document.createElement("td");
       iconTd.classList.add("item-icons");
+      
+      // Add Font Awesome icon with tooltip
+      const iconWrapper = document.createElement("div");
+      iconWrapper.className = "tooltip";
+      
+      const faIcon = document.createElement("i");
+      faIcon.className = "fa-icon";
+      
+      // Determine icon based on item type
+      if (item.base_item.includes("sword")) {
+        faIcon.classList.add("fas", "fa-sword");
+        iconWrapper.innerHTML = '<span class="tooltiptext">Sword</span>';
+      } else if (item.base_item.includes("axe")) {
+        faIcon.classList.add("fas", "fa-hatchet");
+        iconWrapper.innerHTML = '<span class="tooltiptext">Axe</span>';
+      } else {
+        faIcon.classList.add("fas", "fa-question");
+        iconWrapper.innerHTML = '<span class="tooltiptext">Unknown</span>';
+      }
+      
+      iconWrapper.prepend(faIcon);
+      iconTd.appendChild(iconWrapper);
+      
+      // Add original icons if available
       const icons = item.icon?.split(" ") || [];
       icons.forEach((icon, i) => {
         if (icon) {
@@ -57,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const nameTd = document.createElement("td");
       const names = item.names?.[currentLang]?.split(";") || [];
       nameTd.textContent = names[0]?.trim() || "N/A";
-      nameTd.style.fontWeight = "bold";
       if (names.length > 1) {
         nameTd.title = names.map(n => n.trim()).filter(n => n).join("\n");
       }
@@ -65,7 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // Base item column
       const baseTd = document.createElement("td");
       baseTd.textContent = item.base_item || "Any";
-      baseTd.style.fontWeight = "bold";
 
       // Reference column
       const refTd = document.createElement("td");
@@ -78,7 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
         refTd.appendChild(img);
       } else {
         refTd.textContent = "-";
-        refTd.style.fontWeight = "bold";
       }
 
       tr.append(iconTd, nameTd, baseTd, refTd);
@@ -86,10 +119,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function initImageModals() {
+    const images = document.querySelectorAll('.item-icons img, .ref-image');
+    const modalImg = document.querySelector('.modal-img');
+    const closeBtn = document.querySelector('.close');
+
+    images.forEach(img => {
+      img.addEventListener('click', () => {
+        modal.style.display = "block";
+        modalImg.src = img.src;
+        modalImg.alt = img.alt;
+      });
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = "none";
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  }
+
   function updateTableHeaders() {
     tableHeaders.forEach((header, index) => {
       header.textContent = headerTranslations[currentLang]?.[index] || header.textContent;
-      header.style.fontWeight = "bold";
     });
   }
 
@@ -109,18 +165,11 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
           renderTable(data);
           updateTableHeaders();
+          initImageModals();
         });
       languageMenu.classList.add("hidden");
       translateBtn.classList.remove("active");
     });
-  });
-
-  // Close language menu when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!languageMenu.contains(e.target) && e.target !== translateBtn) {
-      languageMenu.classList.add("hidden");
-      translateBtn.classList.remove("active");
-    }
   });
 
   // Theme toggle
@@ -131,14 +180,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update moon/sun icon
     const isDarkMode = document.body.classList.contains("dark-mode");
     themeToggle.innerHTML = isDarkMode 
-      ? '<img src="images/webIconsLogosButtons/moon.png" alt="Light mode">'
+      ? '<img src="images/webIconsLogosButtons/sun.png" alt="Light mode">'
       : '<img src="images/webIconsLogosButtons/moon.png" alt="Dark mode">';
   });
 
   // Apply saved theme and icon
   if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add("dark-mode");
-    themeToggle.innerHTML = '<img src="images/webIconsLogosButtons/moon.png" alt="Light mode">';
+    themeToggle.innerHTML = '<img src="images/webIconsLogosButtons/sun.png" alt="Light mode">';
   } else {
     themeToggle.innerHTML = '<img src="images/webIconsLogosButtons/moon.png" alt="Dark mode">';
   }
