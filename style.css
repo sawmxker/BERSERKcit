@@ -1,1 +1,16 @@
+body {
+  font-family: sans-serif;
+  padding: 2rem;
+  background: #222;
+  color: #eee;
+}
+.item {
+  border: 1px solid #444;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #333;
+}
+.item img {
+  max-width: 100px;
+}
 
