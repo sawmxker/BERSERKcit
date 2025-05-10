@@ -6,6 +6,18 @@
   <title>CIT Items List</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+<script>
+  if (!document.fonts.check('1em SF Pro')) {
+    const style = document.createElement('style');
+    style.textContent = `
+      @font-face {
+        font-family: 'SF Pro';
+        src: local('-apple-system'), local('BlinkMacSystemFont');
+      }
+    `;
+    document.head.appendChild(style);
+  }
+</script>
 <body>
   <div id="splash-logo">
     <img src="images/webIconsLogosButtons/logo.png" alt="Logo" />
