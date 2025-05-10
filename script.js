@@ -1,71 +1,69 @@
-const languageSelect = document.getElementById("language");
-const itemsTableBody = document.getElementById("items-table").getElementsByTagName("tbody")[0];
-const themeToggleButton = document.getElementById("theme-toggle");
+const dataUrl = "data.json";
+const tableBody = document.querySelector("#items-table tbody");
 const translateBtn = document.getElementById("translate-btn");
 const languageMenu = document.getElementById("language-menu");
-const logo = document.getElementById("logo");
-let currentLanguage = 'en';
+const themeToggle = document.getElementById("theme-toggle");
+let currentLang = "en";
 
-function createTableRow(item) {
-  const row = document.createElement('tr');
-  
-  const iconCell = document.createElement('td');
-  const iconImages = item.icon.split(' ').map(imgSrc => {
-    const img = document.createElement('img');
-    img.src = imgSrc;
-    return img;
+fetch(dataUrl)
+  .then(res => res.json())
+  .then(data => renderTable(data));
+
+function renderTable(items) {
+  tableBody.innerHTML = "";
+  items.forEach(item => {
+    const tr = document.createElement("tr");
+
+    const iconTd = document.createElement("td");
+    iconTd.classList.add("item-icons");
+    const icons = item.icon.split(" ");
+    icons.forEach((icon, i) => {
+      const img = document.createElement("img");
+      img.src = icon;
+      img.alt = i === 0 ? "Main hand" : "Off hand";
+      iconTd.appendChild(img);
+    });
+
+    const nameTd = document.createElement("td");
+    nameTd.textContent = item.names[currentLang] || "";
+
+    const baseTd = document.createElement("td");
+    baseTd.textContent = item.base_item;
+
+    const refTd = document.createElement("td");
+    if (item.reference) {
+      const img = document.createElement("img");
+      img.src = item.reference;
+      img.alt = "Reference";
+      img.style.height = "40px";
+      refTd.appendChild(img);
+    }
+
+    tr.append(iconTd, nameTd, baseTd, refTd);
+    tableBody.appendChild(tr);
   });
-  iconCell.append(...iconImages);
-  
-  const nameCell = document.createElement('td');
-  nameCell.textContent = item.names[currentLanguage];
-
-  const baseItemCell = document.createElement('td');
-  baseItemCell.textContent = item.base_item;
-
-  const referenceCell = document.createElement('td');
-  if (item.reference) {
-    const refImg = document.createElement('img');
-    refImg.src = item.reference;
-    referenceCell.appendChild(refImg);
-  }
-
-  row.append(iconCell, nameCell, baseItemCell, referenceCell);
-  return row;
 }
 
-function renderTable() {
-  itemsTableBody.innerHTML = '';
-  data.forEach(item => {
-    const row = createTableRow(item);
-    itemsTableBody.appendChild(row);
-  });
-}
-
-function toggleLanguageMenu() {
+translateBtn.addEventListener("click", () => {
   languageMenu.classList.toggle("hidden");
-}
+  translateBtn.classList.toggle("active");
+});
 
-function changeLanguage(lang) {
-  currentLanguage = lang;
-  renderTable();
-}
-
-function toggleTheme() {
-  document.body.classList.toggle("dark-theme");
-  const icon = themeToggleButton.querySelector("img");
-  icon.src = document.body.classList.contains("dark-theme") ? "images/moon.png" : "images/sun.png";
-}
-
-translateBtn.addEventListener("click", toggleLanguageMenu);
-
-languageMenu.querySelectorAll('button').forEach(button => {
-  button.addEventListener('click', () => {
-    changeLanguage(button.getAttribute("data-lang"));
+document.querySelectorAll(".language-menu button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    currentLang = btn.dataset.lang;
+    fetch(dataUrl)
+      .then(res => res.json())
+      .then(data => renderTable(data));
     languageMenu.classList.add("hidden");
+    translateBtn.classList.remove("active");
   });
 });
 
-themeToggleButton.addEventListener("click", toggleTheme);
-
-renderTable();
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+  const icon = themeToggle.querySelector("img");
+  icon.src = document.body.classList.contains("dark-mode")
+    ? "images/webIconsLogosButtons/light.png"
+    : "images/webIconsLogosButtons/dark.png";
+});
