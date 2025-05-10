@@ -64,8 +64,8 @@ themeToggle.addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
   const icon = themeToggle.querySelector("img");
   icon.src = document.body.classList.contains("dark-mode")
-    ? "images/webIconsLogosButtons/light.png"
-    : "images/webIconsLogosButtons/dark.png";
+    ? "images/webIconsLogosButtons/moon.png"
+    : "images/webIconsLogosButtons/moon.png";
 });
 window.addEventListener("load", () => {
   setTimeout(() => {
